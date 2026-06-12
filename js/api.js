@@ -1,9 +1,5 @@
 // ============================================================
 //  CAPA DE API — LicitaSeguro
-//  Toda la comunicación con Mercado Público pasa por aquí.
-//  El resto de la app NO sabe nada de URLs, proxy ni tickets:
-//  solo llama a obtenerLicitaciones(), obtenerDetalleLicitacion()
-//  y buscarProveedor(), y recibe datos limpios o un Error claro.
 // ============================================================
 
 /**

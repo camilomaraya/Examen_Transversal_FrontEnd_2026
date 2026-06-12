@@ -7,8 +7,8 @@ intermediarios.
 
 **Examen final — Desarrollo Frontend, Instituto Profesional San Sebastián, junio 2026.**
 
-- **Equipo:** _[NOMBRE DEL EQUIPO]_
-- **Integrantes:** _[NOMBRES DE LOS INTEGRANTES]_
+- **Desarrollado por:** Camilo Meriño Araya
+
 
 ---
 
@@ -18,20 +18,17 @@ intermediarios.
 2. [Configuración](#configuración)
 3. [Estructura del proyecto](#estructura-del-proyecto)
 4. [Stack técnico](#stack-técnico)
-5. [Diseño UI/UX y justificación visual](#diseño-uiux-y-justificación-visual)
-6. [Diseño responsivo](#diseño-responsivo)
-7. [Consumo de endpoints y manejo de errores](#consumo-de-endpoints-y-manejo-de-errores)
-8. [Validación del RUT](#validación-del-rut)
-9. [Accesibilidad](#accesibilidad)
-10. [Cumplimiento de la rúbrica](#cumplimiento-de-la-rúbrica)
-11. [Decisiones técnicas clave](#decisiones-técnicas-clave)
+5. [Diseño UI/UX](#diseño-uiux-y-justificación-visual)
+6. [Consumo de endpoints y manejo de errores](#consumo-de-endpoints-y-manejo-de-errores)
+7. [Validación del RUT](#validación-del-rut)
+8. [Accesibilidad](#accesibilidad)
 
 ---
 
 ## Cómo ejecutar el proyecto
 
-**Requisitos:** un navegador moderno (Chrome 90+, Firefox 90+, Edge 90+) y un servidor local.
-No funciona abriendo el HTML directamente con doble clic (file://), porque las peticiones a
+**Requisitos:** un navegador moderno  y un servidor local.
+No funciona abriendo el archivo HTML directamente con doble clic, porque las peticiones a
 través del proxy CORS requieren un origen http(s).
 
 **Pasos:**
@@ -42,6 +39,8 @@ través del proxy CORS requieren un origen http(s).
    - Click derecho sobre `index.html` → "Open with Live Server".
    - El navegador abre la app en `http://127.0.0.1:5500` (o similar).
 4. Navegar por los 4 módulos: Homepage, Licitaciones, Detalle y Proveedores.
+
+o clonar repositorio desde [Examen Transversal Frontend 2026](https://github.com/camilomaraya/Examen_Transversal_FrontEnd_2026).
 
 ---
 
@@ -58,11 +57,11 @@ const CONFIG = {
 };
 ```
 
-- **TICKET**: ticket de acceso a la API de Mercado Público. Se obtiene gratuitamente en
-  [api.mercadopublico.cl/modules/Participa.aspx](https://api.mercadopublico.cl/modules/Participa.aspx).
+- **TICKET**: ticket de acceso a la API de Mercado Público. Se obtiene gratis en
+  [api.mercadopublico.cl/modules/IniciarSesion.aspx](https://api.mercadopublico.cl/modules/IniciarSesion.aspx).
 - **PROXY**: la API de Mercado Público no envía cabeceras CORS, por lo que el navegador
   bloquea las peticiones directas. Se usa un proxy público (corsproxy.io) configurado en
-  una sola línea. Alternativa disponible: `https://api.allorigins.win/raw?url=`.
+  una sola línea.
 
 Cualquier cambio de credencial o estrategia de red se hace exclusivamente en este archivo;
 el resto de la aplicación no conoce ni el ticket ni la URL real.
@@ -112,11 +111,7 @@ conocer URLs, headers ni códigos HTTP.
 
 ---
 
-## Diseño UI/UX y justificación visual
-
-La identidad visual se construyó alrededor de dos atributos del producto: **transparencia**
-(es información pública del Estado) y **aproximabilidad** (debe poder usarlo cualquier persona,
-no solo técnicos en compras públicas).
+## Diseño UI/UX
 
 ### Paleta de colores
 
@@ -126,15 +121,6 @@ Se descartaron tres direcciones consideradas inicialmente:
 - **Negro + cobalto**: estilo bauhaus distintivo pero frío para un servicio de información pública.
 - **Charcoal + terracotta**: cálido pero cercano a paletas editoriales oscuras existentes.
 
-La paleta finalmente adoptada combina:
-
-| Token | Valor | Justificación |
-|---|---|---|
-| `--color-primario` | `#134e4a` (teal profundo) | Combina la estabilidad del azul con la apertura del verde. Diferencia la marca del azul-gobierno literal. |
-| `--color-acento` | `#c2410c` (coral profundo) | Aporta calidez, marca el CTA principal, rompe la frialdad institucional del primario. |
-| `--color-fondo` | `#fdf9f3` (cream) | Evita la sequedad del blanco puro, entrega sensación editorial. |
-| `--color-texto` | `#1a2e2c` | Casi-negro con tinte teal. Contraste 14:1 sobre cream (WCAG AAA). |
-| `--color-texto-suave` | `#5c6a68` | Contraste 5:1 sobre cream (WCAG AA). |
 
 ### Tipografía
 
@@ -144,30 +130,13 @@ Se eligió **Inter** (Google Fonts), sans-serif humanista, por:
 - Soporte completo de español (tildes, eñe).
 - Múltiples pesos (400, 500, 600, 700) que permiten jerarquía sin cambiar de familia.
 
-Se aplica una **escala modular 1.25** (mayor tercera): `1rem → 1.2 → 1.5 → 1.9 → 2.6`, con
-`clamp()` en h1/h2 para tipografía fluida según el viewport.
 
 ### Iconografía y espaciado
 
 Se utiliza **Bootstrap Icons** (vía CDN) por consistencia visual. Todos los iconos son
 decorativos y llevan `aria-hidden="true"` (el texto adyacente describe la acción).
 
-El espaciado sigue una escala de 4px (`--sp-1` a `--sp-8`), aplicada con variables CSS para
-garantizar consistencia entre componentes.
 
----
-
-## Diseño responsivo
-
-Estrategia **mobile-first** reforzada con breakpoints específicos. Los breakpoints siguen
-las convenciones de Bootstrap 5:
-
-| Rango | Dispositivo | Comportamiento |
-|---|---|---|
-| `< 576px` | Móvil | 1 columna en módulos, navbar colapsada, padding reducido |
-| `576px – 768px` | Móvil grande | Transición |
-| `768px – 992px` | Tablet | 2 columnas en módulos, navbar colapsada |
-| `> 992px` | Laptop/desktop | 3 columnas en módulos, navbar expandida |
 
 ### Técnicas aplicadas
 
@@ -179,13 +148,10 @@ las convenciones de Bootstrap 5:
 
 Todos los breakpoints están documentados con comentarios en `css/styles.css`.
 
----
 
 ## Consumo de endpoints y manejo de errores
 
-El consumo se diseñó para cumplir el nivel "Sobresaliente" del indicador 3.2.1: consumo de
-todos los endpoints con parsing robusto del JSON y manejo de escenarios con control de
-códigos HTTP.
+El consumo se diseñó para consumir todos los endpoints con parsing robusto del JSON y manejo de escenarios con control de códigos HTTP.
 
 ### Endpoints consumidos
 
@@ -297,9 +263,6 @@ Esto cierra el flujo entre los tres módulos del sitio.
 
 ## Accesibilidad
 
-La accesibilidad fue una consideración desde el primer commit. La implementación cumple
-los seis sub-puntos del nivel "Sobresaliente" del indicador 3.1.3.
-
 ### Semántica HTML
 
 - Todas las páginas usan landmarks: `<header>`, `<nav>`, `<main>`, `<section>`, `<article>`, `<footer>`.
@@ -353,76 +316,13 @@ El estado de foco es visualmente prominente:
 
 `:focus-visible` muestra el outline solo cuando el usuario navega con teclado, no con mouse.
 
-### Contraste de colores verificado
-
-| Combinación | Ratio | WCAG |
-|---|---|---|
-| Texto principal sobre cream | 14:1 | AAA |
-| Texto suave sobre cream | 5:1 | AA |
-| Blanco sobre teal primario | 10:1 | AAA |
-| Blanco sobre coral acento | 5.5:1 | AA |
 
 ### Imágenes y elementos gráficos
 
-El proyecto no utiliza imágenes raster. Los iconos vienen de Bootstrap Icons (fuente icónica)
+El proyecto no utiliza imágenes raster. Los iconos vienen de Bootstrap Icons
 con `aria-hidden="true"` porque son decorativos; el texto adyacente describe la acción en
 todos los casos.
 
----
-
-## Cumplimiento de la rúbrica
-
-| Indicador | Cómo se cumple |
-|---|---|
-| **1.1.2** — UI/UX y estándares | Cuatro vistas con paleta justificada (teal/coral/cream), tipografía Inter con escala modular 1.25, iconografía consistente, espaciado documentado en variables CSS. Justificación detallada en sección "Diseño UI/UX". |
-| **1.2.3** — Responsividad | Mobile-first con breakpoints en 576/768/992px, grid de Bootstrap, CSS Grid con `auto-fit`, tipografía fluida con `clamp()`. Comentarios en CSS detallando cada media query. |
-| **2.1.1** — Interactividad | Validación de filtros previa al fetch, loader que aparece y se oculta en `finally`, paginación con botones deshabilitados en extremos, focus management al cambiar de página, JavaScript modular separado por responsabilidad. |
-| **2.1.2** — Validación de datos | RUT validado en cuatro niveles: vacío, caracteres válidos, longitud, dígito verificador (módulo 11). Mensajes inline específicos para cada caso, con `role="alert"` y `aria-live`. |
-| **3.1.3** — Accesibilidad | Skip link, HTML semántico, labels asociados, ARIA extensivo (`aria-label`, `aria-labelledby`, `aria-current`, `aria-describedby`, `aria-live`), navegación por teclado con focus management, contraste AAA en texto principal. |
-| **3.2.1** — Endpoints | Tres endpoints consumidos (listado, detalle, proveedor). Manejo de códigos HTTP (429, 500, 5xx, otros), parseo robusto del JSON, errores lógicos de la API (códigos 200 con mensaje de error), mensajes contextualizados al usuario, placeholder `"--"` para campos nulos. |
-
----
-
-## Decisiones técnicas clave
-
-### Páginas separadas en lugar de SPA
-
-Se eligió arquitectura multi-página (`index.html`, `licitaciones.html`, `detalle.html`,
-`proveedores.html`) en lugar de Single Page Application. Razones:
-
-- Requisito del enunciado: HTML, CSS y JavaScript puros.
-- No requiere router cliente.
-- Cada página tiene un JS dedicado más fácil de mantener.
-- URLs significativas (`detalle.html?codigo=XXX`) que son compartibles.
-
-### Proxy CORS en lugar de backend propio
-
-La API de Mercado Público no envía cabeceras CORS, por lo que `fetch` directo desde el
-navegador falla. Se usa un proxy público (`corsproxy.io`) en lugar de implementar un
-backend propio. Razones:
-
-- Mantiene el proyecto 100% frontend (cumple el requisito del enunciado).
-- No requiere despliegue de servidor.
-- Reemplazable en una sola línea (`config.js`) si el proxy cambia.
-
-### `fetch` + `async/await` en lugar de JSONP
-
-JSONP es soportado por la API pero no permite leer el código HTTP de la respuesta. Como
-la rúbrica exige "manejo de códigos HTTP", se eligió `fetch` (con el costo asumido del proxy).
-
-### Paginación cliente (no servidor)
-
-La API devuelve el listado completo en una sola respuesta (no soporta paginación
-server-side). Se mantienen todos los resultados en memoria y se paginan en el cliente
-de 10 en 10.
-
-### Campos crudos respetados
-
-Algunos campos como `Tipo: "L1"` o `Modalidad: 0` se muestran tal como los devuelve la API.
-Mapearlos a textos legibles agregaría una tabla de equivalencias mantenible aparte; se
-priorizó la fidelidad a la respuesta original.
-
----
 
 ## Notas finales
 
