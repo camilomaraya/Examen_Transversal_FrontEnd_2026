@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Consulta y filtra el listado de licitaciones públicas de Chile por fecha y estado.">
+  <title>Licitaciones — LicitaSeguro</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <a href="#contenido" class="skip-link">Saltar al contenido principal</a>
+
+  <!-- Navbar (idéntico a index, solo cambia el .activo) -->
+  <header>
+    <nav class="navbar navbar-expand-md navbar-ls" aria-label="Navegación principal">
+      <div class="container">
+        <a class="navbar-brand" href="index.html" aria-label="LicitaSeguro, ir a inicio">
+          <i class="bi bi-shield-check" aria-hidden="true"></i> LicitaSeguro
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#menuPrincipal" aria-controls="menuPrincipal"
+                aria-expanded="false" aria-label="Abrir o cerrar menú">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="menuPrincipal">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
+            <li class="nav-item"><a class="nav-link activo" href="licitaciones.html" aria-current="page">Licitaciones</a></li>
+            <li class="nav-item"><a class="nav-link" href="proveedores.html">Proveedores</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main id="contenido" class="container py-4 py-md-5">
+
+    <h1 class="mb-2">Licitaciones públicas</h1>
+    <p class="text-muted mb-4">Filtra el listado por fecha de publicación y/o estado.</p>
+
+    <!-- ============================================================
+         FILTROS — formulario accesible con labels y errores inline
+         ============================================================ -->
+    <form id="form-filtros" class="filtros-panel" novalidate aria-label="Filtros de búsqueda">
+      <div class="row g-3 align-items-end">
+
+        <div class="col-md-5">
+          <label for="filtro-fecha">Fecha de publicación</label>
+          <input type="date" id="filtro-fecha" class="form-control"
+                 aria-describedby="error-fecha ayuda-fecha">
+          <small id="ayuda-fecha" class="text-muted">Opcional. Si no eliges fecha, debes seleccionar un estado.</small>
+          <div id="error-fecha" class="error-inline" role="alert" aria-live="polite"></div>
+        </div>
+
+        <div class="col-md-5">
+          <label for="filtro-estado">Estado</label>
+          <select id="filtro-estado" class="form-select" aria-describedby="error-estado">
+            <option value="">Todos</option>
+            <option value="activas">Activas</option>
+            <option value="adjudicada">Adjudicadas</option>
+            <option value="cerrada">Cerradas</option>
+            <option value="desierta">Desiertas</option>
+            <option value="revocada">Revocadas</option>
+            <option value="suspendida">Suspendidas</option>
+          </select>
+          <div id="error-estado" class="error-inline" role="alert" aria-live="polite"></div>
+        </div>
+
+        <div class="col-md-2">
+          <button type="submit" class="btn-primario w-100">
+            <i class="bi bi-search" aria-hidden="true"></i> Buscar
+          </button>
+        </div>
+      </div>
+    </form>
+
+    <!-- ============================================================
+         RESULTADOS — info, loader, listado, paginación
+         ============================================================ -->
+    <p id="info-resultados" class="text-muted mb-3" aria-live="polite"></p>
+
+    <!-- Loader (oculto por defecto con d-none) -->
+    <div id="loader" class="loader-wrap d-none" role="status" aria-live="polite">
+      <div class="loader-spinner" aria-hidden="true"></div>
+      <p>Cargando licitaciones…</p>
+    </div>
+
+    <!-- Aquí JS inyecta las cards de licitaciones (o el estado vacío/error) -->
+    <div id="resultados" aria-live="polite"></div>
+
+    <!-- Aquí JS inyecta los botones de paginación -->
+    <nav id="paginacion" class="paginacion" aria-label="Paginación de resultados"></nav>
+
+  </main>
+
+  <footer class="footer-ls">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6"><strong>LicitaSeguro</strong> — Información pública, accesible.</div>
+        <div class="col-md-6 text-md-end mt-3 mt-md-0">
+          Datos: <a href="https://api.mercadopublico.cl/" target="_blank" rel="noopener">API Mercado Público</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts: ORDEN IMPORTA. config -> api -> utils -> lógica de página -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/licitaciones.js"></script>
+</body>
+</html>
